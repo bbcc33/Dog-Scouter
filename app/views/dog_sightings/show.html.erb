@@ -1,0 +1,24 @@
+<h1>Dog Sighting Details</h1>
+
+<p>
+  <strong>Dog Description:</strong>
+  <%= @dog_sighting.dog_description %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @dog_sighting.location %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @dog_sighting.city.city_name if @dog_sighting.city %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @dog_sighting.user.email if @dog_sighting.user %>
+</p>
+
+<%= link_to 'Edit', edit_dog_sighting_path(@dog_sighting) %> |
+<%= link_to 'Back', dog_sightings_path %>
