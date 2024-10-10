@@ -1,0 +1,42 @@
+<h1>Cities</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @cities.each do |city| %>
+    <tr>
+      <td><%= city.city_name %></td>
+      <td>
+        <%= link_to 'Show', city_path(city) %> |
+        <% if city.user_id.present? %>
+          <%= link_to 'Edit', edit_city_path(city) %> |
+          <%= link_to 'Delete', city_path(city), method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
+        
+      </td>
+    </tr>
+
+<br>
+
+  <% end %>
+
+        <br>Would you like to add a city?<br>
+        <%= link_to 'Add City', new_city_path, class: 'btn btn-primary' %>
+  </div>
+
+ 
+
+  </tbody>
+</table>
+
+<%= link_to 'Home', dog_sightings_path, class: 'btn' %>
+<%# not logging off %>
+<%= link_to 'Log Off', logoff_path, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to log off?' } %>
+
+
+

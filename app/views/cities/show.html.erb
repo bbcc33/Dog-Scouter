@@ -1,0 +1,9 @@
+<h1><%= @city.city_name %></h1>
+
+<p>
+  <strong>City Name:</strong>
+  <%= @city.city_name %>
+</p>
+
+<%= link_to 'Edit', edit_city_path(@city) %> |
+<%= link_to 'Back', cities_path %>

@@ -1,0 +1,31 @@
+<h1>Dog Sightings</h1>
+
+<%= link_to 'Create a New Dog Sighting', new_dog_sighting_path, class: 'btn' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Dog Description</th>
+      <th>Location</th>
+      <th>City</th>
+      <th>User</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @dog_sightings.each do |sighting| %>
+      <tr>
+        <td><%= sighting.dog_description %></td>
+        <td><%= sighting.location %></td>
+        <td><%= sighting.city.city_name if sighting.city %></td>
+        <td><%= sighting.user.email if sighting.user %></td>
+        <td>
+          <%= link_to 'Show', dog_sighting_path(sighting) %>
+          <%= link_to 'Edit', edit_dog_sighting_path(sighting) %>
+          <%= link_to 'Destroy', dog_sighting_path(sighting), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'Cities', cities_path, class: 'btn' %>
