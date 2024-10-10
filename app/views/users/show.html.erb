@@ -3,4 +3,7 @@
 <%# Add button to show password? %>
 <p><strong>Password:</strong> [*****]</p>
 <%= link_to 'Edit', edit_user_path(@user) %> |
+
+<%# dont want to show this on show users page unless they are logged in %>
+<%# or when they create a new user they are automatically logged in? %>
 <%= link_to 'Back to Users', users_path %>

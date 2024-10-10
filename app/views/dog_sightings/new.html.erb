@@ -22,13 +22,23 @@
     <%= form.text_field :location %>
   </div>
 
-  <div class="field">
-    <%= form.label :city_id %>
-    <%= form.collection_select :city_id, City.all, :id, :city_name, prompt: "Select City" %>
-        <br>Would you like to add a city?<br>
-        <%= link_to 'Add City', new_city_path, class: 'btn btn-primary' %>
-  </div>
-<br>
+<!-- Dropdown -->
+
+  <a class="dropdown-trigger btn" href="#" data-target="city-dropdown">Pick a City</a>
+
+  <ul id="city-dropdown" class="dropdown-content">
+    <% City.all.each do |city| %>
+      <li><a href="#!" data-value="<%= city.id %>"><%= city.city_name %></a></li>
+    <% end %>
+  </ul>
+
+  <%= form.hidden_field :city_id, id: "selected_city_id" %>
+  <br>
+  <small>Don't see your city?</small>
+  <%= link_to 'Add City', new_city_path, class: 'btn btn-primary btn-small' %>
+</div>
+
+  <br>
   <div class="actions">
     <%= form.submit "Create Dog Sighting" %>
   </div>

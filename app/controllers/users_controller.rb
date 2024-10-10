@@ -16,16 +16,35 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to user_url(@user), notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      # Automatically log in the user after successful signup
+      session[:user_id] = @user.id # Store the user's ID in the session
+      redirect_to @user, notice: 'Welcome! You have signed up and are now logged in.'
+    else
+      render :new
     end
   end
+
+  # alts
+
+  #   if @user.save
+  #     # Redirect to the login page after signup
+  #     redirect_to login_path, notice: "Your account has been created. Please log in."
+  #   else
+  #     render :new
+  #   end
+  # end
+
+  #   respond_to do |format|
+  #     if @user.save
+  #       format.html { redirect_to user_url(@user), notice: 'User was successfully created.' }
+  #       format.json { render :show, status: :created, location: @user }
+  #     else
+  #       format.html { render :new, status: :unprocessable_entity }
+  #       format.json { render json: @user.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   def edit
     @user = User.find(params[:id])

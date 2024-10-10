@@ -1,4 +1,6 @@
 class DogSightingsController < ApplicationController
+  before_action :authenticate_user!, only: %i[new create edit update destroy]
+
   def index
     @dog_sightings = DogSighting.all
   end
@@ -13,6 +15,8 @@ class DogSightingsController < ApplicationController
 
   def create
     @dog_sighting = DogSighting.new(dog_sighting_params)
+    # attaching user to a dog sighting
+    @dog_sighting.user = current_user
 
     respond_to do |format|
       if @dog_sighting.save
