@@ -1,5 +1,5 @@
 <h1>Log In</h1>
-<%= form_with(url: logon_path, method: :post, local: true) do |form| %>
+<%= form_with(url: new_user_session_path, method: :post, local: true) do |form| %>
   <div>
     <%= form.label :email %>
     <%= form.text_field :email %>
@@ -16,3 +16,4 @@
 
   </div>
 <% end %>
+<%= link_to 'Log in', new_user_session_path %>

@@ -1,12 +1,15 @@
 class CitiesController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy]
   before_action :authorize_user, only: [:destroy]
+  before_action :set_city, only: %i[show edit update destroy]
+  before_action :ensure_editable, only: %i[edit update destroy]
+
   def index
     @cities = City.all
   end
 
   def show
-    @city = City.find(params[:id])
+    # @city = City.find(params[:id])
   end
 
   def new
@@ -28,8 +31,12 @@ class CitiesController < ApplicationController
   def edit
     @city = City.find(params[:id])
 
-    respond_to do |format|
-      format.html { redirect_to cities_url, notice: 'You are not allowed to edit' } if current_user.id != @city.user_id
+    if current_user.id != @city.user_id
+      redirect_to cities_url, notice: 'You are not allowed to edit'
+    else
+      respond_to do |format|
+        format.html
+      end
     end
   end
 
@@ -48,6 +55,8 @@ class CitiesController < ApplicationController
   end
 
   def destroy
+    # @city.destroy
+    # redirect_to cities_path, notice: 'City was successfully deleted.'
     @city = City.find(params[:id])
     if @city.user == current_user # or check for admin role
       @city.destroy
@@ -59,15 +68,19 @@ class CitiesController < ApplicationController
 
   private
 
+  def set_city
+    @city = City.find(params[:id])
+  end
+
   def city_params
     params.require(:city).permit(:city_name)
   end
 
   def ensure_editable
-    return unless @city.user_id.nil?
+    return if @city.user == current_user
 
     flash[:alert] = 'You are not allowed to edit or delete this city'
-    redirect_to_cities_path
+    redirect_to cities_path
   end
 
   def authorize_user

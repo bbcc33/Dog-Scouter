@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user! # Ensure the user is signed in
   before_action :set_user, only: %i[show edit update destroy]
+
   def index
     @users = User.all
     @current_user = User.find_by(id: session[:current_user])
@@ -19,6 +21,7 @@ class UsersController < ApplicationController
     if @user.save
       # Automatically log in the user after successful signup
       session[:user_id] = @user.id # Store the user's ID in the session
+      sign_in @user # this is Devise's way
       redirect_to @user, notice: 'Welcome! You have signed up and are now logged in.'
     else
       render :new
@@ -71,40 +74,40 @@ class UsersController < ApplicationController
     end
   end
 
-  def login
-    if current_user
-      redirect_to cities_path, notice: 'You are already logged in.'
-    else
-      render :logon, notice: 'This user does not exist'
+  # def login
+  #   if current_user
+  #     redirect_to cities_path, notice: 'You are already logged in.'
+  #   else
+  #     render :logon, notice: 'This user does not exist'
 
-    end
-  end
+  # def logon
+  #   @user = User.find_by(email: params[:email])
 
-  def logon
-    @user = User.find_by(email: params[:email])
+  #   if @user && @user.authenticate(params[:password])
+  #     session[:current_user] = @user.id
+  #     redirect_to cities_path, notice: "Welcome #{@user.email}. You are logged in."
+  #   else
+  #     Rails.logger.debug("Password authentication failed for user #{params[:email]}")
+  #     flash.now[:alert] = 'Invalid email or password'
+  #     render :logon
+  #   end
+  # end
 
-    if @user && @user.authenticate(params[:password])
-      session[:current_user] = @user.id
-      redirect_to cities_path, notice: "Welcome #{@user.email}. You are logged in."
-    else
-      Rails.logger.debug("Password authentication failed for user #{params[:email]}")
-      flash.now[:alert] = 'Invalid email or password'
-      render :logon
-    end
-  end
-
-  def logoff
-    session.delete(:current_user)
-    redirect_to users_path, notice: 'You have logged off.'
-  end
+  # devise does away with the need for a logoff method
+  # def logoff
+  #   session.delete(:current_user)
+  #   redirect_to users_path, notice: 'You have logged off.'
+  # end
 
   private
 
   def set_user
     @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to users_path, alert: 'User not found.'
   end
 
   def user_params
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:email, :password, :password_confirmation)
   end
 end
