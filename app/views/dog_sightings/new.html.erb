@@ -1,0 +1,70 @@
+<h1>New Dog Sighting</h1>
+
+<%= form_with model: @dog_sighting, local: true do |form| %>
+  <% if @dog_sighting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dog_sighting.errors.count, "error") %> prohibited this dog sighting from being saved:</h2>
+      <ul>
+        <% @dog_sighting.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :dog_description %>
+    <%= form.text_field :dog_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location %>
+  </div>
+
+  <!-- City Dropdown -->
+  <div class="input-field">
+    <a class="dropdown-trigger btn" href="#" data-target="city-dropdown">Pick a City</a>
+
+    <ul id="city-dropdown" class="dropdown-content">
+      <% City.all.each do |city| %>
+        <li>
+          <a href="#!" data-value="<%= city.id %>" class="city-item"><%= city.city_name %></a>
+        </li>
+      <% end %>
+    </ul>
+
+    <!-- Hidden Field for City ID -->
+    <%= form.hidden_field :city_id, id: "selected_city_id" %>
+  </div>
+
+  <br>
+  <small>Don't see your city?</small>
+  <%= link_to 'Add City', new_city_path, class: 'btn btn-primary btn-small' %>
+
+  <br>
+
+  <div class="actions">
+    <%= form.submit "Create Dog Sighting", class: 'btn' %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', dog_sightings_path, class:'btn' %>
+
+<!-- JavaScript to handle the dropdown interaction -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize dropdown (using Materialize)
+    var dropdownElems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(dropdownElems);
+
+    // Handle city selection from dropdown
+    document.querySelectorAll('.city-item').forEach(function(item) {
+      item.addEventListener('click', function() {
+        var cityId = this.getAttribute('data-value');
+        // Set the city ID in the hidden field
+        document.getElementById('selected_city_id').value = cityId;
+      });
+    });
+  });
+</script>
