@@ -11,9 +11,9 @@
   </div>
 
   <div>
-    <%= form.submit "Log In" %>
-    <%= link_to 'New User', new_user_path %>
+    <%= form.submit "Log In", class:'btn' %>
+    <%= link_to 'New User', new_user_path, class:'btn'  %>
 
   </div>
 <% end %>
-<%= link_to 'Log in', new_user_session_path %>
+<%= link_to 'Log in', new_user_session_path, class:'btn' %>

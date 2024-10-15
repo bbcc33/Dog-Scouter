@@ -7,26 +7,21 @@
     </tr>
   </thead>
   <tbody>
-<% @cities.each do |city| %>
-    <tr>
-      <td><%= city.city_name %></td>
-      <td>
-        <%= link_to 'Show', city_path(city) %> |
-        <% if city.user_id.present? %>
-          <%= link_to 'Edit', edit_city_path(city) %> |
-          <%= link_to 'Delete', city_path(city), method: :delete, data: { confirm: 'Are you sure?' } %>
-        <% end %>
-      </td>
-    </tr>
-<br>
-  <% end %>
-        <br>Would you like to add a city?<br>
-        <%= link_to 'Add City', new_city_path, class: 'btn btn-primary' %>
-  </div>
+    <% @cities.each do |city| %>
+      <tr>
+        <td><%= city.city_name %></td>
+        <td>
+          <%= link_to 'Show', city_path(city), class:'btn' %> |
+          <% if city.user_id.present? %>
+            <%= link_to 'Edit', edit_city_path(city), class:'btn' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
-<%= link_to 'Home', dog_sightings_path, class: 'btn' %>
-<%= link_to 'Log off', destroy_user_session_path, method: :delete, class: 'btn btn-secondary' %>
 
+<%= link_to 'Add City Here', new_city_path, class: 'btn btn-primary' %>
 
-
+<br><%= link_to 'All Dog Sightings', dog_sightings_path, class: 'btn' %>
+<%= button_to 'Logoff', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>

@@ -1,15 +1,12 @@
 class CitiesController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy]
-  before_action :authorize_user, only: [:destroy]
   before_action :set_city, only: %i[show edit update destroy]
-  before_action :ensure_editable, only: %i[edit update destroy]
 
   def index
     @cities = City.all
   end
 
   def show
-    # @city = City.find(params[:id])
   end
 
   def new
@@ -29,36 +26,21 @@ class CitiesController < ApplicationController
   end
 
   def edit
-    @city = City.find(params[:id])
+    return unless current_user.id != @city.user_id
 
-    if current_user.id != @city.user_id
-      redirect_to cities_url, notice: 'You are not allowed to edit'
-    else
-      respond_to do |format|
-        format.html
-      end
-    end
+    redirect_to cities_url, notice: 'You are not allowed to edit'
   end
 
   def update
-    @city = City.find(params[:id])
-
-    respond_to do |format|
-      if @city.update(city_params)
-        format.html { redirect_to city_url(@city), notice: 'City was successfully updated.' }
-        format.json { render :show, status: :ok, location: @city }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @city.errors, status: :unprocessable_entity }
-      end
+    if @city.update(city_params)
+      redirect_to city_url(@city), notice: 'City was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    # @city.destroy
-    # redirect_to cities_path, notice: 'City was successfully deleted.'
-    @city = City.find(params[:id])
-    if @city.user == current_user # or check for admin role
+    if @city.user == current_user || current_user.admin?
       @city.destroy
       redirect_to cities_path, notice: 'City was successfully deleted.'
     else
@@ -74,16 +56,5 @@ class CitiesController < ApplicationController
 
   def city_params
     params.require(:city).permit(:city_name)
-  end
-
-  def ensure_editable
-    return if @city.user == current_user
-
-    flash[:alert] = 'You are not allowed to edit or delete this city'
-    redirect_to cities_path
-  end
-
-  def authorize_user
-    redirect_to cities_path, alert: 'Not authorized' unless current_user.admin? # example
   end
 end

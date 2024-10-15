@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   get 'login', to: 'users#login', as: :login
+
   # root to: 'users#login'
   # get '/login', to: 'users#login'
   # post '/logon', to: 'users#logon'
@@ -16,6 +17,9 @@ Rails.application.routes.draw do
   resources :cities
   resources :dog_sightings
   resources :users
+  resources :dog_sightings do
+    resources :comments, only: [:create]
+  end
 
   # Defines the root path route ("/")
   # root "posts#index"

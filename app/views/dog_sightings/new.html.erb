@@ -22,26 +22,49 @@
     <%= form.text_field :location %>
   </div>
 
-<!-- Dropdown -->
+  <!-- City Dropdown -->
+  <div class="input-field">
+    <a class="dropdown-trigger btn" href="#" data-target="city-dropdown">Pick a City</a>
 
-  <a class="dropdown-trigger btn" href="#" data-target="city-dropdown">Pick a City</a>
+    <ul id="city-dropdown" class="dropdown-content">
+      <% City.all.each do |city| %>
+        <li>
+          <a href="#!" data-value="<%= city.id %>" class="city-item"><%= city.city_name %></a>
+        </li>
+      <% end %>
+    </ul>
 
-  <ul id="city-dropdown" class="dropdown-content">
-    <% City.all.each do |city| %>
-      <li><a href="#!" data-value="<%= city.id %>"><%= city.city_name %></a></li>
-    <% end %>
-  </ul>
+    <!-- Hidden Field for City ID -->
+    <%= form.hidden_field :city_id, id: "selected_city_id" %>
+  </div>
 
-  <%= form.hidden_field :city_id, id: "selected_city_id" %>
   <br>
   <small>Don't see your city?</small>
   <%= link_to 'Add City', new_city_path, class: 'btn btn-primary btn-small' %>
-</div>
 
   <br>
+
   <div class="actions">
-    <%= form.submit "Create Dog Sighting" %>
+    <%= form.submit "Create Dog Sighting", class: 'btn' %>
   </div>
 <% end %>
 
-<%= link_to 'Back', dog_sightings_path %>
+<%= link_to 'Back', dog_sightings_path, class:'btn' %>
+
+<!-- JavaScript to handle the dropdown interaction -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize dropdown (using Materialize)
+    var dropdownElems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(dropdownElems);
+
+    // Handle city selection from dropdown
+    document.querySelectorAll('.city-item').forEach(function(item) {
+      item.addEventListener('click', function() {
+        var cityId = this.getAttribute('data-value');
+        // Set the city ID in the hidden field
+        document.getElementById('selected_city_id').value = cityId;
+      });
+    });
+  });
+</script>

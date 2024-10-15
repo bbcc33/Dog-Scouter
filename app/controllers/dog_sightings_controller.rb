@@ -1,5 +1,7 @@
 class DogSightingsController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy]
+  before_action :set_dog_sighting, only: %i[edit update destroy]
+  before_action :authorize_user!, only: %i[edit update]
 
   def index
     @dog_sightings = DogSighting.all
@@ -7,6 +9,7 @@ class DogSightingsController < ApplicationController
 
   def show
     @dog_sighting = DogSighting.find(params[:id])
+    @comment = Comment.new
   end
 
   def new
@@ -15,7 +18,6 @@ class DogSightingsController < ApplicationController
 
   def create
     @dog_sighting = DogSighting.new(dog_sighting_params)
-    # attaching user to a dog sighting
     @dog_sighting.user = current_user
 
     respond_to do |format|
@@ -30,27 +32,55 @@ class DogSightingsController < ApplicationController
   end
 
   def edit
-    @dog_sighting = DogSighting.find(params[:id])
+    # Authorization is handled by the `authorize_user!` before_action
   end
 
   def update
-    @dog_sighting = DogSighting.find(params[:id])
     if @dog_sighting.update(dog_sighting_params)
-      redirect_to @dog_sighting, notice: 'Dog sighting was succesfully updated'
+      redirect_to @dog_sighting, notice: 'Dog sighting was successfully updated.'
     else
       render :edit
     end
   end
 
   def destroy
-    @dog_sighting = DogSighting.find(params[:id])
-    @dog_sighting.destroy
-    redirect_to dog_sightings_url, notice: 'Dog sighting was succesfully deleted'
+    if @dog_sighting.user == current_user
+      @dog_sighting.destroy
+      redirect_to dog_sightings_path, notice: 'Dog sighting was successfully deleted.'
+    else
+      redirect_to dog_sightings_path, alert: 'You are not authorized to delete this sighting.'
+    end
+  end
+
+  def create_comment
+    @comment = @dog_sighting.comments.build(comment_params)
+    @comment.user = current_user
+
+    if @comment.save
+      redirect_to @dog_sighting, notice: 'Comment was successfully added.'
+    else
+      render :show
+    end
   end
 
   private
 
   def dog_sighting_params
     params.require(:dog_sighting).permit(:dog_description, :location, :city_id, :user_id)
+  end
+
+  def set_dog_sighting
+    @dog_sighting = DogSighting.find(params[:id])
+  end
+
+  def comment_params
+    params.require(:comment).permit(:content)
+  end
+
+  # Check if the current user is authorized to edit or update the dog sighting
+  def authorize_user!
+    return if @dog_sighting.user == current_user
+
+    redirect_to dog_sightings_path, alert: 'You are not authorized to edit this dog sighting.'
   end
 end

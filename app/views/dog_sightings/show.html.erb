@@ -20,6 +20,33 @@
   <%= @dog_sighting.user.email if @dog_sighting.user %>
 </p>
 
-<%= link_to 'Edit', edit_dog_sighting_path(@dog_sighting) %> |
-<%= link_to 'Back', dog_sightings_path %>
+<%= link_to 'Edit', edit_dog_sighting_path(@dog_sighting), class:'btn' %> |
+<%= link_to 'Back', dog_sightings_path, class:'btn' %>
 <%= link_to 'Delete', dog_sighting_path(@dog_sighting), method: :delete, data: { confirm: 'Are you sure you want to delete this dog sighting?' }, class: 'btn btn-danger' %>
+
+<hr>
+
+<h3>Comments</h3>
+
+<%= form_with(model: [ @dog_sighting, Comment.new ], local: true) do |form| %>
+  <% if user_signed_in? %>
+    <div class="form-group">
+      <%= form.label :content, "Your Comment" %>
+      <%= form.text_area :content, rows: 3, class: 'form-control' %>
+    </div>
+    <%= form.submit 'Add Comment', class: 'btn btn-primary' %>
+  <% else %>
+    <p>Please <%= link_to 'log in', new_user_session_path %> to comment.</p>
+  <% end %>
+<% end %>
+
+<hr>
+
+<h4>Existing Comments:</h4>
+<% @dog_sighting.comments.each do |comment| %>
+  <div class="comment">
+    <strong><%= comment.user.email %>:</strong>
+    <p><%= comment.content %></p>
+    <hr>
+  </div>
+<% end %>

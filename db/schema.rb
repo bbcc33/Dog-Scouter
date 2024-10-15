@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_11_020549) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_15_022633) do
   create_table "cities", force: :cascade do |t|
     t.string "city_name"
     t.datetime "created_at", null: false
@@ -18,6 +18,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_020549) do
     t.integer "user_id", null: false
     t.boolean "is_seeded", default: false
     t.index ["user_id"], name: "index_cities_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "dog_sighting_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dog_sighting_id"], name: "index_comments_on_dog_sighting_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "dog_sightings", force: :cascade do |t|
@@ -45,6 +55,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_020549) do
   end
 
   add_foreign_key "cities", "users"
+  add_foreign_key "comments", "dog_sightings"
+  add_foreign_key "comments", "users"
   add_foreign_key "dog_sightings", "cities"
   add_foreign_key "dog_sightings", "users"
 end

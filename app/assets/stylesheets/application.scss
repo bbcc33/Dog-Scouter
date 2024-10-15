@@ -34,3 +34,23 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
   }
+
+  // .banner-right-img {
+  //   position: absolute;
+  //   top: 0;
+  //   max-width: 10%; /* You can adjust the max width */
+  //   max-height: 10%; /* Ensure the height doesn't exceed the banner */
+  //   object-fit: contain; /* This will keep the entire image visible */
+  // }
+  
+  
+  .banner-left-img {
+    left: 0;
+    width: 40%; /* Adjust the width as needed */
+  }
+  
+  .banner-right-img {
+    right: 20;
+    height: 1px;
+    width: 1px; /* Adjust the width as needed */
+  }

@@ -20,15 +20,19 @@
         <td><%= sighting.city.city_name if sighting.city %></td>
         <td><%= sighting.user.email if sighting.user %></td>
         <td>
-          <%= link_to 'Show', dog_sighting_path(sighting) %>
-          <%= link_to 'Edit', edit_dog_sighting_path(sighting) %>
-          <%= link_to 'Destroy', dog_sighting_path(sighting), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Show', dog_sighting_path(sighting), class: 'btn' %>
+          <%= link_to 'Edit', edit_dog_sighting_path(sighting), class: 'btn' %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<%= link_to 'Cities', cities_path, class: 'btn' %>
-<%= link_to 'New User', new_user_path, class: 'btn' %>
-<%# <%= link_to 'Login', login_path, class: 'btn' %>
-<%= link_to 'Log in', new_user_session_path %>
+<%= link_to 'See Cities', cities_path, class: 'btn' %>
+<% if user_signed_in? %>
+  <%= link_to 'My Dog Sightings', users_path(current_user), class: 'btn' %>
+  <%= button_to 'Logoff', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
+<% else %>
+  <%= link_to 'Login', new_user_session_path, class: 'btn' %>
+<% end %>
+
+
