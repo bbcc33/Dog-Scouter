@@ -45,12 +45,24 @@ class DogSightingsController < ApplicationController
 
   def destroy
     if @dog_sighting.user == current_user
-      @dog_sighting.destroy
-      redirect_to dog_sightings_path, notice: 'Dog sighting was successfully deleted.'
+      if @dog_sighting.destroy
+        redirect_to dog_sightings_path, notice: 'Dog sighting was successfully deleted.'
+      else
+        redirect_to dog_sightings_path, alert: 'Failed to delete the dog sighting. Please try again.'
+      end
     else
       redirect_to dog_sightings_path, alert: 'You are not authorized to delete this sighting.'
     end
   end
+
+  # def destroy
+  #   if @dog_sighting.user == current_user
+  #     @dog_sighting.destroy
+  #     redirect_to dog_sightings_path, notice: 'Dog sighting was successfully deleted.'
+  #   else
+  #     redirect_to dog_sightings_path, alert: 'You are not authorized to delete this sighting.'
+  #   end
+  # end
 
   def create_comment
     @comment = @dog_sighting.comments.build(comment_params)

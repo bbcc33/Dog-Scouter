@@ -34,13 +34,13 @@
       <% end %>
     </ul>
 
-    <!-- Hidden Field for City ID -->
     <%= form.hidden_field :city_id, id: "selected_city_id" %>
   </div>
 
-  <br>
-  <small>Don't see your city?</small>
-  <%= link_to 'Add City', new_city_path, class: 'btn btn-primary btn-small' %>
+<!-- display city -->
+  <div id="selected-city-display" style="margin-top: 20px;">
+  <p>Selected City: <span id="city-name-display">None</span></p>
+</div>
 
   <br>
 
@@ -49,21 +49,29 @@
   </div>
 <% end %>
 
+  <br>
+
+  <small>Don't see your city?</small>
+  <%= link_to 'Add City', new_city_path, class: 'btn btn-primary btn-small' %>
+
 <%= link_to 'Back', dog_sightings_path, class:'btn' %>
 
 <!-- JavaScript to handle the dropdown interaction -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+
     // Initialize dropdown (using Materialize)
     var dropdownElems = document.querySelectorAll('.dropdown-trigger');
     var instances = M.Dropdown.init(dropdownElems);
 
-    // Handle city selection from dropdown
+
     document.querySelectorAll('.city-item').forEach(function(item) {
       item.addEventListener('click', function() {
         var cityId = this.getAttribute('data-value');
+        var cityName = this.textContent;
         // Set the city ID in the hidden field
         document.getElementById('selected_city_id').value = cityId;
+        document.getElementById('city-name-display').textContent = cityName;
       });
     });
   });
