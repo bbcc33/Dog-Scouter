@@ -2,6 +2,7 @@
 
 <%= link_to 'Create a New Dog Sighting', new_dog_sighting_path, class: 'btn' %>
 
+
 <table>
   <thead>
     <tr>
@@ -27,12 +28,13 @@
     <% end %>
   </tbody>
 </table>
+
 <%= link_to 'See Cities', cities_path, class: 'btn' %>
+
 <% if user_signed_in? %>
   <%= link_to 'My Dog Sightings', users_path(current_user), class: 'btn' %>
+
   <%= button_to 'Logoff', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
 <% else %>
   <%= link_to 'Login', new_user_session_path, class: 'btn' %>
 <% end %>
-
-

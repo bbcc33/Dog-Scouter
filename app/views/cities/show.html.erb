@@ -1,9 +1,23 @@
-<h1><%= @city.city_name %></h1>
+<h1>City: <%= @city.city_name %></h1>
+<h2>Dog Sightings in <%= @city.city_name %></h2>
 
-<p>
-  <strong>City Name:</strong>
-  <%= @city.city_name %>
-</p>
 
-<%= link_to 'Edit', edit_city_path(@city) %> |
-<%= link_to 'Back', cities_path %>
+<% if @dog_sightings.any? %>
+  <ul>
+    <% @dog_sightings.each do |dog_sighting| %>
+      <li>
+        <strong>Dog Description:</strong> <%= dog_sighting.dog_description %><br>
+        <strong>Location:</strong> <%= dog_sighting.location %>
+        <br>
+        <%= link_to 'View Dog Sighting', dog_sighting_path(dog_sighting), class: 'btn btn-small' %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No dog sightings recorded for this city.</p>
+<% end %>
+
+<%= link_to 'Back to Cities', cities_path, class: 'btn btn-secondary' %> |
+<%= link_to 'Edit', edit_city_path(@city), class: 'btn btn-secondary' %>
+
+

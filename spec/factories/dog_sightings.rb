@@ -1,9 +1,7 @@
-# spec/factories/dog_sightings.rb
 FactoryBot.define do
   factory :dog_sighting do
-    dog_description { 'A brown dog' }
-    location { '123 Main St' }
-    city
-    user
+    association :user  # Ensures the dog_sighting is associated with a user
+    association :city  # Ensures the dog_sighting is associated with a city
+    dog_description { 'A dog' }
   end
 end

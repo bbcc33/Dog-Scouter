@@ -2,7 +2,9 @@
 
 <% @dog_sightings.each do |sighting| %>
   <div>
-    <p><%= sighting.dog_description %> (City: <%= sighting.city.city_name %>)</p>
+    <p><%= sighting.dog_description %> | (City: <%= sighting.city.city_name %>)</p>
+        <p>Description: <%= sighting.location %></p>
+        <td>User: <%= sighting.user.email if sighting.user %></td>
   </div>
 <% end %>
 

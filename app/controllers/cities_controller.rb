@@ -7,6 +7,8 @@ class CitiesController < ApplicationController
   end
 
   def show
+    @city = City.find(params[:id])
+    @dog_sightings = @city.dog_sightings # assuming you have a has_many association set up
   end
 
   def new

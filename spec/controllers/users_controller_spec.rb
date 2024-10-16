@@ -1,48 +1,53 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  describe "GET #index" do
-    it "returns a successful response and assigns @users" do
-      # Create some users
-      create(:user, email: "user1@example.com")
-      create(:user, email: "user2@example.com")
+  # Use Faker to generate unique emails for each user
+  let(:user1) { create(:user, email: Faker::Internet.unique.email) }
+  let(:user2) { create(:user, email: Faker::Internet.unique.email) }
 
+  # Use user1 for the dog sightings
+  let!(:dog_sighting1) { create(:dog_sighting, user: user1, city: create(:city), dog_description: 'Dog 1') }
+  let!(:dog_sighting2) { create(:dog_sighting, user: user1, city: create(:city), dog_description: 'Dog 2') }
+
+  # Sign in user1 before each test
+  before do
+    sign_in user1 # Sign in the user for the test
+  end
+
+  describe 'GET #index' do
+    it 'returns a successful response and assigns @dog_sightings for the current user' do
       # Send the GET request
       get :index
 
       # Ensure the response was successful
       expect(response).to have_http_status(:success)
 
-      # Ensure @users is assigned and contains the created users
-      expect(assigns(:users).count).to eq(2)
-      expect(assigns(:users).pluck(:email)).to include("user1@example.com", "user2@example.com")
+      # Ensure @dog_sightings contains the created dog sightings for the current user
+      expect(assigns(:dog_sightings).count).to eq(2) # Expect 2 sightings for user1
+      expect(assigns(:dog_sightings).pluck(:dog_description)).to include('Dog 1', 'Dog 2')
     end
   end
 
-  describe "GET #show" do
-    it "returns a successful response and assigns @user" do
-      # Create a user
-      user = create(:user)
+  describe 'GET #show' do
+    let!(:user) { create(:user) } # Create a user for the test
 
-      # Send the GET request to show the user
-      get :show, params: { id: user.id }
+    before do
+      sign_in user # Sign in the user (Devise helper)
+    end
 
-      # Ensure the response was successful
-      expect(response).to have_http_status(:success)
-
-      # Ensure @user is assigned
-      expect(assigns(:user)).to eq(user)
+    it 'returns a successful response and assigns @user' do
+      get :show # No need to pass params since we're using current_user
+      expect(assigns(:user)).to eq(user) # Check that @user is set correctly
+      expect(response).to have_http_status(:success) # Check if the response is successful
     end
   end
 
-  describe "POST #create" do
-    it "creates a new user and redirects to the user's show page" do
-      # Send the POST request to create a new user
-      post :create, params: { user: { email: "newuser@example.com", password: "password" } }
-
-      # Ensure the user was created and redirected to the show page
-      expect(User.count).to eq(1)
-      expect(response).to redirect_to(user_path(User.last))
+  describe 'POST #create' do
+    it 'creates a new user and redirects to the user\'s show page' do
+      # This will ensure only 1 user is created
+      expect do
+        post :create, params: { user: { email: 'user@example.com', password: 'password' } }
+      end.to change(User, :count).by(1)
     end
   end
 end

@@ -2,9 +2,15 @@ class DogSightingsController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy]
   before_action :set_dog_sighting, only: %i[edit update destroy]
   before_action :authorize_user!, only: %i[edit update]
+  before_action :set_cities, only: [:index]
 
   def index
-    @dog_sightings = DogSighting.all
+    @cities = City.all
+    @dog_sightings = if params[:city_id].present?
+                       DogSighting.where(city_id: params[:city_id])
+                     else
+                       DogSighting.all
+                     end
   end
 
   def show
@@ -94,5 +100,9 @@ class DogSightingsController < ApplicationController
     return if @dog_sighting.user == current_user
 
     redirect_to dog_sightings_path, alert: 'You are not authorized to edit this dog sighting.'
+  end
+
+  def set_cities
+    @cities = City.all
   end
 end
