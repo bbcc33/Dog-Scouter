@@ -1,4 +1,6 @@
 RSpec.describe 'Cities', type: :request do
+  include RequestHelpers
+
   describe 'GET /index' do
     it 'returns a successful response' do
       get cities_path
@@ -6,10 +8,10 @@ RSpec.describe 'Cities', type: :request do
     end
 
     it 'returns the correct number of cities' do
-      # assuming you have some cities in your database
       create_list(:city, 3)
       get cities_path
-      expect(assigns(:cities).count).to eq(3)
+      json_response = JSON.parse(response.body)
+      expect(json_response.count).to eq(3)
     end
   end
 end

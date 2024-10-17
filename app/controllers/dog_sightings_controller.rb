@@ -96,10 +96,16 @@ class DogSightingsController < ApplicationController
   end
 
   # Check if the current user is authorized to edit or update the dog sighting
+  # def authorize_user!
+  #   return if @dog_sighting.user == current_user
+
+  #   redirect_to dog_sightings_path, alert: 'You are not authorized to edit this dog sighting.'
+  # end
+
   def authorize_user!
     return if @dog_sighting.user == current_user
 
-    redirect_to dog_sightings_path, alert: 'You are not authorized to edit this dog sighting.'
+    redirect_to dog_sightings_path, alert: 'You are not authorized to perform this action.'
   end
 
   def set_cities
