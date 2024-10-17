@@ -1,16 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DogScouter</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <%= stylesheet_link_tag "https://fonts.googleapis.com/icon?family=Material+Icons" %>
+    
+    <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
   </head>
 
   <body>
+    <div class="banner">
+      <div class="banner-content">
+        <h1>Welcome to Dog Scouter</h1>
+        <p>A place for cyclists to warn each other about loose dogs on their rides</p>
+      </div>
+    </div>
+
+
+
+    
+
+
+    <!-- Flash Messages (Success/Errors) -->
+    <% flash.each do |key, message| %>
+      <div class="card-panel <%= key == 'notice' ? 'teal lighten-2' : 'red lighten-2' %>">
+        <span class="white-text"><%= message %></span>
+      </div>
+    <% end %>
+
     <%= yield %>
+
+    <div id="index-banner" class="parallax-container">
+    </div>
+
+    
+
+    <!-- Materialize JS -->
+    <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" %>
+
+    <!-- JavaScript (compiled by esbuild) -->
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+
   </body>
 </html>

@@ -1,0 +1,13 @@
+example_id                                                 | status | run_time        |
+---------------------------------------------------------- | ------ | --------------- |
+./spec/controllers/cities_controller_spec.rb[1:1:1]        | passed | 0.01623 seconds |
+./spec/controllers/dog_sightings_controller_spec.rb[1:1:1] | passed | 0.05646 seconds |
+./spec/controllers/users_controller_spec.rb[1:1:1]         | passed | 0.02114 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:1]         | failed | 0.01977 seconds |
+./spec/controllers/users_controller_spec.rb[1:3:1]         | passed | 0.02279 seconds |
+./spec/requests/cities_spec.rb[1:1:1]                      | passed | 0.00865 seconds |
+./spec/requests/cities_spec.rb[1:1:2]                      | passed | 0.03126 seconds |
+./spec/requests/dog_sigtings_spec.rb[1:1:1]                | passed | 0.00917 seconds |
+./spec/requests/dog_sigtings_spec.rb[1:1:2]                | passed | 0.06052 seconds |
+./spec/requests/users_spec.rb[1:1:1]                       | failed | 0.01169 seconds |
+./spec/requests/users_spec.rb[1:1:2]                       | failed | 0.21432 seconds |
