@@ -12,13 +12,11 @@
     </div>
   <% end %>
 
-  <!-- Dog Description Field -->
   <div class="field">
     <%= form.label :dog_description %>
     <%= form.text_field :dog_description %>
   </div>
 
-  <!-- Location Field -->
   <div class="field">
     <%= form.label :location %>
     <%= form.text_field :location %>
@@ -39,7 +37,6 @@
     <%= form.hidden_field :city_id, id: "selected_city_id" %>
   </div>
 
-  <!-- Display selected city -->
   <div id="selected-city-display" style="margin-top: 20px;">
     <p>Selected City: <span id="city-name-display">None</span></p>
   </div>
@@ -58,23 +55,18 @@
 
 <%= link_to 'Back', dog_sightings_path, class:'btn' %>
 
-<!-- JavaScript to handle the dropdown interaction -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Initialize dropdown (using Materialize)
     var dropdownElems = document.querySelectorAll('.dropdown-trigger');
     var instances = M.Dropdown.init(dropdownElems);
 
-    // Handle city selection
     document.querySelectorAll('.city-item').forEach(function(item) {
       item.addEventListener('click', function() {
         var cityId = this.getAttribute('data-value');
         var cityName = this.textContent;
 
-        // Set the city ID in the hidden field
         document.getElementById('selected_city_id').value = cityId;
 
-        // Display the selected city name
         document.getElementById('city-name-display').textContent = cityName;
       });
     });
