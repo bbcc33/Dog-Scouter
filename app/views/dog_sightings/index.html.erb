@@ -1,0 +1,31 @@
+<h1>Dog Sightings</h1>
+
+<%= link_to 'Create a New Dog Sighting', new_dog_sighting_path, class: 'btn' %>
+
+<div class="row">
+  <% @dog_sightings.each do |sighting| %>
+    <div class="col s12 m4 l4">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text" style="height: 200px;"> <!-- Fixed height for uniformity -->
+          <span class="card-title"><%= sighting.dog_description %></span>
+          <p><strong>Location:</strong> <%= sighting.location %></p>
+          <p><strong>City:</strong> <%= sighting.city.city_name if sighting.city %></p>
+          <p><strong>User:</strong> <%= sighting.user.email if sighting.user %></p>
+        </div>
+        <div class="card-action">
+          <%= link_to 'Show', dog_sighting_path(sighting), class: 'btn' %>
+          <%= link_to 'Edit', edit_dog_sighting_path(sighting), class: 'btn' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to 'See Cities', cities_path, class: 'btn' %>
+
+<% if user_signed_in? %>
+  <%= link_to 'My Dog Sightings', user_path(current_user), class: 'btn' %>
+  <%= button_to 'Logoff', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
+<% else %>
+  <%= link_to 'Login', new_user_session_path, class: 'btn' %>
+<% end %>

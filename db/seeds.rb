@@ -7,3 +7,16 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# Create five major cities
+cities = [
+  { city_name: 'New York' },
+  { city_name: 'Los Angeles' },
+  { city_name: 'Chicago' },
+  { city_name: 'Houston' },
+  { city_name: 'Phoenix' }
+]
+
+cities.each do |city|
+  City.create(city)
+end

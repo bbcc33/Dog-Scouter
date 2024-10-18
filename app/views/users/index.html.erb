@@ -1,0 +1,30 @@
+<body>
+  <div class="container">
+    <h1>My Dog Sightings:</h1>
+
+    <!-- Start of Materialize Row -->
+    <div class="row">
+      <% @dog_sightings.each do |sighting| %>
+        <!-- Start of Each Sighting -->
+        <div class="col s12 m4 l4">
+          <div class="card">
+            <div class="card-content" style="height: 200px;"> <!-- Fixed height for uniformity -->
+              <span class="card-title"><%= sighting.dog_description %></span>
+              <p><strong>City:</strong> <%= sighting.city.city_name %></p>
+              <p><strong>Description:</strong> <%= sighting.location %></p>
+              <p><strong>User:</strong> <%= sighting.user.email if sighting.user %></p>
+            </div>
+            <div class="card-action">
+              <%= link_to 'Edit', edit_dog_sighting_path(sighting), class: 'btn' %> |
+              <%= button_to 'Delete', dog_sighting_path(sighting), method: :delete, data: { confirm: 'Are you sure you want to delete this dog sighting?' }, class: 'btn btn-danger' %>
+            </div>
+          </div>
+        </div>
+        <!-- End of Each Sighting -->
+      <% end %>
+    </div>
+    <!-- End of Materialize Row -->
+
+    <%= link_to 'Back to Profile', user_path(current_user), class: 'btn' %>
+  </div>
+</body>
