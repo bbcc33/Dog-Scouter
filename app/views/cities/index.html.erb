@@ -1,0 +1,33 @@
+<body>
+  <div class="container" style="background-color: #0a7e8c; padding: 20px; border-radius: 8px; color: white;">    <h1>Cities</h1>
+
+    <!-- Table with Enhanced Styles -->
+    <table class="highlight">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cities.each do |city| %>
+          <tr>
+            <td><%= city.city_name %></td>
+            <td>
+              <%= link_to 'Show', city_path(city), class: 'btn btn-info' %> |
+              <% if city.user_id.present? %>
+                <%= link_to 'Edit', edit_city_path(city), class: 'btn btn-warning' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <!-- Add City Button -->
+    <%= link_to 'Add City Here', new_city_path, class: 'btn btn-success' %>
+
+    <br><%= link_to 'All Dog Sightings', dog_sightings_path, class: 'btn btn-primary' %>
+    <%= button_to 'Logoff', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
+  </div>
+</body>
