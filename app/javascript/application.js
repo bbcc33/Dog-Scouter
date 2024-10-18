@@ -1,15 +1,15 @@
-// Entry point for the build script in your package.json
 import Rails from "@rails/ujs";
 Rails.start();
-
-// Import Materialize CSS
-import 'materialize-css/dist/css/materialize.min.css'; 
-import { M } from 'materialize-css';  // Import Materialize JS
-
+import 'materialize-css/dist/css/materialize.min.css'; // Import Materialize CSS
+import 'materialize-css/dist/js/materialize.min.js';   // Import Materialize JS
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize Materialbox (if you need it)
   var elems = document.querySelectorAll('.materialboxed');
   M.Materialbox.init(elems);
+
+
+  var elems = document.querySelectorAll('.parallax');
+  var instances = M.Parallax.init(elems);
 
   // Initialize Materialize dropdown (if still using dropdown elsewhere in the app)
   var dropdownTriggers = document.querySelectorAll('.dropdown-trigger');

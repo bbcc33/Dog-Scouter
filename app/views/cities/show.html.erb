@@ -1,23 +1,27 @@
 <h1>City: <%= @city.city_name %></h1>
 <h2>Dog Sightings in <%= @city.city_name %></h2>
 
-
 <% if @dog_sightings.any? %>
-  <ul>
-    <% @dog_sightings.each do |dog_sighting| %>
-      <li>
-        <strong>Dog Description:</strong> <%= dog_sighting.dog_description %><br>
-        <strong>Location:</strong> <%= dog_sighting.location %>
-        <br>
-        <%= link_to 'View Dog Sighting', dog_sighting_path(dog_sighting), class: 'btn btn-small' %>
-      </li>
+  <div class="row">
+    <% @dog_sightings.each_with_index do |dog_sighting, index| %>
+      <!-- Start of Each Card -->
+      <div class="col s12 m6 l3">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title"><%= dog_sighting.dog_description %></span>
+            <p><strong>Location:</strong> <%= dog_sighting.location %></p>
+          </div>
+          <div class="card-action">
+            <%= link_to 'View Dog Sighting', dog_sighting_path(dog_sighting), class: 'btn btn-small' %>
+          </div>
+        </div>
+      </div>
+      <!-- End of Each Card -->
     <% end %>
-  </ul>
+  </div>
 <% else %>
   <p>No dog sightings recorded for this city.</p>
 <% end %>
 
 <%= link_to 'Back to Cities', cities_path, class: 'btn btn-secondary' %> |
 <%= link_to 'Edit', edit_city_path(@city), class: 'btn btn-secondary' %>
-
-
