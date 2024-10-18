@@ -1,5 +1,8 @@
 //= link_tree ../images
-//= link_directory ../stylesheets .css // Remove if using Webpacker for stylesheets
+//= link_directory ../stylesheets .css
+//= link_tree ../../javascript .js
 //= link application.js
-//= link rails-ujs.js
-//= link_tree ../builds // Keep this for Webpacker output (JS and CSS)
+//= link application.css
+
+// This is for handling legacy Sprockets assets
+//= link_tree ../builds

@@ -1,10 +1,9 @@
-// Entry point for the build script in your package.json
 import Rails from "@rails/ujs";
 Rails.start();
-
-// Import Materialize CSS
-import 'materialize-css/dist/css/materialize.min.css'; 
+import 'materialize-css/dist/css/materialize.min.css'; // Import Materialize CSS
 import { M } from 'materialize-css';  // Import Materialize JS
+  // app/frontend/application.js
+  import './application.css'; // or './application.scss' if you're using SCSS
 
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize Materialbox (if you need it)
@@ -26,6 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectedCityName = citySelect.options[citySelect.selectedIndex].text;
     cityNameDisplay.innerText = selectedCityName;
   }
+
+
+
 
   // Update the display when the user selects a city
   citySelect.addEventListener('change', function() {

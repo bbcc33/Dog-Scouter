@@ -5,17 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DogScouter</title>
 
-    <%= stylesheet_link_tag "https://fonts.googleapis.com/icon?family=Material+Icons" %>
-    
-    <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
+    <!-- Materialize CSS -->
+    <%= stylesheet_link_tag "https://fonts.googleapis.com/icon?family=Material+Icons" %>
+    <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" %>
+
+    <!-- Application CSS via cssbundling-rails or Sprockets -->
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <!-- CSRF and Content Security Policy -->
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= javascript_importmap_tags %>
+    <!-- JavaScript (compiled by esbuild) -->
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 
+    <!-- Materialize JS -->
+    <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" %>
+
+    <!-- Importmap Tags (if using Rails importmap) -->
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
@@ -25,11 +35,6 @@
         <p>A place for cyclists to warn each other about loose dogs on their rides</p>
       </div>
     </div>
-
-
-
-    
-
 
     <!-- Flash Messages (Success/Errors) -->
     <% flash.each do |key, message| %>
@@ -42,14 +47,5 @@
 
     <div id="index-banner" class="parallax-container">
     </div>
-
-    
-
-    <!-- Materialize JS -->
-    <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" %>
-
-    <!-- JavaScript (compiled by esbuild) -->
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-
   </body>
 </html>

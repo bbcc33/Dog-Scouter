@@ -6,7 +6,9 @@ ruby '3.2.1'
 gem 'rails', '~> 7.1.3', '>= 7.1.3.4'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-# gem 'sprockets-rails'
+gem 'cssbundling-rails'
+gem 'jsbundling-rails'
+gem 'sprockets-rails'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.4'
@@ -42,9 +44,6 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
-
-gem 'jsbundling-rails'
-
 gem 'foreman'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
