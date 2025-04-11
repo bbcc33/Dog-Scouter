@@ -1,16 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DogScouter</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+    <!-- Materialize CSS -->
+    <%# <%= stylesheet_link_tag "https://fonts.googleapis.com/icon?family=Material+Icons" %>
+    <%# <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" %>
+
+ <!-- Include jQuery -->
+<%= javascript_include_tag "https://code.jquery.com/jquery-3.6.0.min.js" %>
+
+    <!-- CSRF and Content Security Policy -->
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- JavaScript (compiled by esbuild) -->
+    <%# <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+
+    <!-- VERY IMPORTANT MAKES MY BUTTONS SCROLLLLL!!! Materialize JS -->
+    <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" %>
+
+       <!-- VERY IMPORTANT GETS MY BASIC LAYOUT Application CSS via cssbundling-rails -->
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <!-- Importmap Tags (if using Rails importmap) -->
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+<body style="background-color: #f0f8ff;">    
+
+  <nav>
+    <div class="nav-wrapper">
+
+      <a href="#" class="brand-logo center">Welcome to Dog Sighter</a>
+      <img class="responsive-img" src="<%= asset_path('red_cartoon_bike_3290293.png') %>" style="width: 100px; height: 100px; display: block; margin-left: 50px; margin-right: auto;">
+
+    </div>
+  </nav>
+
+    <%# <div class="card-panel teal lighten-2">
+      <p>A place for cyclists to report their dog sightings
+        </p>
+      </div> %>
+        
+
+    <!-- Flash Messages (Success/Errors) -->
+    <% flash.each do |key, message| %>
+      <div class="card-panel <%= key == 'notice' ? 'teal lighten-2' : 'red lighten-2' %>">
+        <span class="white-text"><%= message %></span>
+      </div>
+    <% end %>
+
     <%= yield %>
+
+    <div id="index-banner" class="parallax-container">
+    </div>
   </body>
 </html>

@@ -1,0 +1,7 @@
+<h1>Welcome, <%= @user.email %></h1>
+
+<h5>Member since: <%= @user.created_at.strftime("%B %d, %Y") %></h5>
+
+<%= link_to 'View All Dog Sightings', dog_sightings_path, class:'btn' %>
+<%= link_to 'View My Dog Sightings', users_path, class:'btn' %>
+<%= button_to 'Logoff', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>

@@ -1,0 +1,27 @@
+<h1>Edit City</h1>
+
+<%= form_with model: @city, local: true do |form| %>
+  <% if @city.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@city.errors.count, "error") %> prohibited this city from being saved:</h2>
+      <ul>
+        <% @city.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :city_name %>
+    <%= form.text_field :city_name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', cities_path, class: 'btn' %>
+<%# <%= link_to 'Delete', city_path(@city), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn' %>
+<%= button_to 'Delete', city_path(@city), method: :delete, data: { confirm: 'Are you sure you want to delete this city?' }, class: 'btn btn-danger' %>
